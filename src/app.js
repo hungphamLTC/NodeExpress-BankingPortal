@@ -7,9 +7,13 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('/', (req, res)=>res.render('index', {title: 'Index'}));
+const accountData = fs.readFileSync(path.join(__dirname, 'json', 'accounts.json'), 'utf8');
+const accounts = JSON.parse(accountData);
 
+app.get('/', (req, res)=>res.render('index', {title: 'Account Summary', accounts: accounts}));
+app.get('/savings', (req, res)=>res.render('account', {account: accounts.savings}));
+app.get('/checking', (req, res)=> res.render('account', {account: accounts.checking}));
+app.get('/credit', (req, res)=> res.render('account', {account: account.credit}));
+app.get('/profile', (req, res)=> res.render('profile', {user: users[0]}));
 app.listen(3000, ()=> console.log("Listening on port 3000"));
 
-//path, fs, express, app
-//set view: view engine ejs
